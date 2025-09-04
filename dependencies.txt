@@ -1,0 +1,6 @@
+sudo dpkg --add-architecture i386
+
+sudo apt update
+sudo apt install libc6:i386 libstdc++6:i386 zlib1g:i386 gcc-arm-linux-gnueabi python2.7
+
+sudo ln -s /usr/bin/python2.7 /usr/bin/python
