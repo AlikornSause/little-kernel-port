@@ -1,0 +1,5 @@
+Shit to do to maybe someday port k61v1_64_bsp to qin f21pro
+    - fill in stuff in platform/mt6761/include/platform/mt_reg_base.h from shit like usb_sif@11210000
+    - fill in other stuff in platform/mt6761/include/platform/ such as platform/mt6761/include/platform/memory_layout.h 
+    - get lcd running someday
+
