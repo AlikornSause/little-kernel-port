@@ -56,7 +56,9 @@
 #define PERICFG_BASE (0x10003000)
 
 // APB Module dramc
-#define DRAMC0_BASE (0x1001D000)
+/*##########################*/
+// 0x1001D000
+#define DRAMC0_BASE (0x1022a000)
 
 // APB Module gpio
 #define GPIO_BASE (0x10005000)
@@ -89,7 +91,9 @@
 #define PWRAP_BASE (0x1000D000)
 
 // APB Module device_apc_ao
-#define DEVAPC_AO_BASE (0x1000E000)
+/*##########################*/
+// 0x1000E000
+#define DEVAPC_AO_BASE (0x10207000)
 
 // APB Module ddrphy
 #define DDRPHY_BASE (0x1000F000)
@@ -142,7 +146,9 @@
 #define DEVAPC_BASE (0x10207000)
 
 // APB Module bus_dbg_tracker_cfg
-#define BUS_DBG_BASE (0x10208000)
+/*##########################*/
+// 0x10208000
+#define BUS_DBG_BASE (0x0d410000)
 
 // APB Module apmixed
 //#define APMIXED_BASE (0x10209000)
@@ -215,10 +221,14 @@
 #define AUXADC_BASE (0x11001000)
 
 // APB Module uart
-#define AP_UART0_BASE (0x11002000)
+/*##########################*/
+// 0x11002000
+#define AP_UART0_BASE (0x11020000)
 
 // APB Module uart
-#define AP_UART1_BASE (0x11003000)
+/*##########################*/
+// 0x11003000
+#define AP_UART1_BASE (0x11030000)
 
 // APB Module uart
 #define AP_UART2_BASE (0x11004000)
@@ -252,7 +262,9 @@
 #define USB_BASE (0x11200000)
 
 // APB Module usb_sif
-#define USBSIF_BASE (0x11CC0000)
+/*##########################*/
+// 0x11CC0000
+#define USBSIF_BASE (0x11210000)
 
 // APB Module audio
 #define AUDIO_BASE (0x11220000)
