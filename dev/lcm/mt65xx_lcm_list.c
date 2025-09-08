@@ -28,19 +28,6 @@
 * OR REFUND ANY SOFTWARE LICENSE FEES OR SERVICE CHARGE PAID BY RECEIVER TO
 * MEDIATEK FOR SUCH MEDIATEK SOFTWARE AT ISSUE.
 */
-
-#include "lcm_drv.h"
-
-/* Force inclusion of your driver */
-// extern LCM_DRIVER hct_nt35521s_dsi_vdo_hd_boe_50_xld;
-
-LCM_DRIVER *lcm_driver_list[] = {
-	NULL,
-    // &hct_nt35521s_dsi_vdo_hd_boe_50_xld, // <- this is required
-    // other drivers...
-};
-
-
 #include <lcm_drv.h>
 #ifdef BUILD_LK
 #include <platform/disp_drv_platform.h>
@@ -67,23 +54,13 @@ extern LCM_DRIVER hct_hx8394f_dsi_vdo_hd_cmi;
 extern LCM_DRIVER hct_otm1282_dsi_vdo_hd_auo;
 extern LCM_DRIVER hct_rm68200_dsi_vdo_hd_cpt;
 extern LCM_DRIVER hct_rm68200_dsi_vdo_hd_tm_50_xld;
-// extern LCM_DRIVER hct_nt35521s_dsi_vdo_hd_boe_50_xld;
+extern LCM_DRIVER hct_nt35521s_dsi_vdo_hd_boe_50_xld;
 extern LCM_DRIVER hct_hx8394d_dsi_vdo_hd_cmi;
 
-/*
-LCM_DRIVER *	lcm_driver_list[] = {
-    // &hct_nt35521s_dsi_vdo_hd_boe_50_xld,  // force inclusion
-};
+extern LCM_DRIVER nt35521_hd_dsi_vdo_truly_rt5081_lcm_drv;
 
-#if defined(HCT_NT35521S_DSI_VDO_HD_BOE_50_XLD)
-    // &hct_nt35521s_dsi_vdo_hd_boe_50_xld,
-#endif
-*/
-
-
-
-/*
 LCM_DRIVER *lcm_driver_list[] = {
+    &nt35521_hd_dsi_vdo_truly_rt5081_lcm_drv,
 #if defined(HCT_OTM1285A_DSI_VDO_HD_BOE)
        &hct_otm1285a_dsi_vdo_hd_boe,
 #endif
@@ -109,14 +86,13 @@ LCM_DRIVER *lcm_driver_list[] = {
 #endif
 
 #if defined(HCT_NT35521S_DSI_VDO_HD_BOE_50_XLD)
-       // &hct_nt35521s_dsi_vdo_hd_boe_50_xld,
+       &hct_nt35521s_dsi_vdo_hd_boe_50_xld,
 #endif
 
 #if defined(HCT_HX8394D_DSI_VDO_HD_CMI)
        &hct_hx8394d_dsi_vdo_hd_cmi,
 #endif
 };
-*/
 
 #define LCM_COMPILE_ASSERT(condition) LCM_COMPILE_ASSERT_X(condition, __LINE__)
 #define LCM_COMPILE_ASSERT_X(condition, line) LCM_COMPILE_ASSERT_XX(condition, line)
