@@ -84,6 +84,15 @@ void kmain(void)
 {
 #if !defined(MACH_FPGA) && !defined(SB_LK_BRINGUP)
 	boot_time = get_timer(0);
+
+
+/*******************************
+Try printing the h letter to uart
+********************************/
+	*(volatile unsigned char *)(0x11020000) = 0x48; // = "H"
+/*******************************
+********************************/
+
 #endif
 
 	// get us into some sort of thread context

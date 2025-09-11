@@ -33,7 +33,11 @@
 extern "C" {
 #endif
 
-#define DEBUGLEVEL 0
+/* 
+Set DEBUGLEVEL to always print logs,
+useful for debugging when nothing works :)
+*/
+#define DEBUGLEVEL 5
 
 /* debug levels */
 #define CRITICAL 0
