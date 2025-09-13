@@ -57,24 +57,14 @@ char *get_bootimg_partition_name(uint32_t bootimg_type)
 	char *result = NULL;
 
 	switch (bootimg_type) {
-	case BOOTIMG_TYPE_RECOVERY:
-#ifndef RECOVERY_AS_BOOT
-#ifdef MTK_GPT_SCHEME_SUPPORT
-		result = "recovery";
-#else
-		result = "RECOVERY";
-#endif
-		break;
-#endif
-	case BOOTIMG_TYPE_BOOT:
-#ifdef MTK_GPT_SCHEME_SUPPORT
-		result = "boot";
-#else
-		result = "BOOTIMG";
-#endif
-		break;
-	default:
-		break;
+		case BOOTIMG_TYPE_RECOVERY:
+			result = "RECOVERY";
+			break;
+		case BOOTIMG_TYPE_BOOT:
+			result = "boot";
+			break;
+		default:
+			break;
 	}
 
 	return result;

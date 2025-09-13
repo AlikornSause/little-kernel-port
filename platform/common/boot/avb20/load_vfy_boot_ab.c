@@ -379,18 +379,17 @@ int load_vfy_boot(uint32_t bootimg_type, uint32_t addr)
 {
 	int ret = STATUS_OK;
 	uint32_t img_vfy_time = 0;
-	AvbSlotVerifyResult avb_ret = AVB_SLOT_VERIFY_RESULT_OK;
-	AvbSlotVerifyData *slot_data = NULL;
-	AvbSlotVerifyFlags avb_flag = AVB_SLOT_VERIFY_FLAGS_NONE;
 	uint32_t lock_state = LKS_DEFAULT;
 	uint32_t dm_status = 0;
 	AvbHashtreeErrorMode hashtree_error_mode = AVB_HASHTREE_ERROR_MODE_RESTART_AND_INVALIDATE;
+	AvbSlotVerifyResult avb_ret = AVB_SLOT_VERIFY_RESULT_OK;
+	AvbSlotVerifyData *slot_data = NULL;
+	AvbSlotVerifyFlags avb_flag = AVB_SLOT_VERIFY_FLAGS_NONE;
 
 	img_vfy_time = get_timer(0);
 
 	g_boot_state = BOOT_STATE_RED;
 
-	/* heap initialization for avb */
 	avb_heap_sz = AVB_HEAP_SZ;
 	pal_log_debug("[avb] avb heap alloc size 0x%x\n", avb_heap_sz);
 	avb_heap = (void *)(uint32_t)mblock_reserve_ext(&g_boot_arg->mblock_info,
@@ -399,38 +398,40 @@ int load_vfy_boot(uint32_t bootimg_type, uint32_t addr)
 			0xc0000000,
 			0,
 			"avb");
+
 	if (avb_heap == 0) {
 		pal_log_err("[avb] avb heap alloc fails\n");
 		avb_heap_sz = 0;
 		return -1;
-	} else
+	} else {
 		pal_log_debug("[avb] avb heap alloc 0x%x\n", (uint32_t)avb_heap);
-
-#ifdef MTK_SEC_FASTBOOT_UNLOCK_SUPPORT
-#if defined(MTK_DM_VERITY_OFF) || defined(MTK_BUILD_DEFAULT_UNLOCK) || !defined(MTK_SECURITY_SW_SUPPORT)
-	/* This feature is for test purpose only.
-	 * we unlock device without wiping userdata, which should not
-	 * happen for MP product. We do this because after userdata
-	 * has been wiped, Android will fail to mount userdata and reboot
-	 * to recovery to format userdata, and then reboot. If we always
-	 * wipe userdata in boot process, Android will never get a properly
-	 * formatted userdata.
-	 */
-#ifdef MTK_SECURITY_SW_SUPPORT
-	/* unlock device */
-	if (sec_set_device_lock(0) != 0) {
-		ret = ERR_AVB_UNLOCK_DEVICE_FAILED;
-		goto end;
 	}
-#endif
 
-	/* disable verification */
-	if (avb_user_verification_set(ab_ops.ops, get_suffix(), 0) != true) {
-		ret = ERR_AVB_SET_VERIFICATION_FAILED;
-		goto end;
-	}
-#endif
-#endif
+	#ifdef MTK_SEC_FASTBOOT_UNLOCK_SUPPORT
+		#if defined(MTK_DM_VERITY_OFF) || defined(MTK_BUILD_DEFAULT_UNLOCK) || !defined(MTK_SECURITY_SW_SUPPORT)
+			/* This feature is for test purpose only.
+			* we unlock device without wiping userdata, which should not
+			* happen for MP product. We do this because after userdata
+			* has been wiped, Android will fail to mount userdata and reboot
+			* to recovery to format userdata, and then reboot. If we always
+			* wipe userdata in boot process, Android will never get a properly
+			* formatted userdata.
+			*/
+			#ifdef MTK_SECURITY_SW_SUPPORT
+				/* unlock device */
+				if (sec_set_device_lock(0) != 0) {
+					ret = ERR_AVB_UNLOCK_DEVICE_FAILED;
+					goto end;
+				}
+			#endif
+
+			/* disable verification */
+			if (avb_user_verification_set(ab_ops.ops, get_suffix(), 0) != true) {
+				ret = ERR_AVB_SET_VERIFICATION_FAILED;
+				goto end;
+			}
+		#endif
+	#endif
 
 	if (boot_authentication(bootimg_type) == 0)
 		avb_flag = AVB_SLOT_VERIFY_FLAGS_ALLOW_VERIFICATION_ERROR;
@@ -441,7 +442,6 @@ int load_vfy_boot(uint32_t bootimg_type, uint32_t addr)
 		goto end;
 	}
 #endif
-
 	get_dm_verity_status(&dm_status);
 	if (dm_status)
 		avb_flag |= AVB_SLOT_VERIFY_FLAGS_RESTART_CAUSED_BY_HASHTREE_CORRUPTION;
@@ -483,18 +483,13 @@ int load_vfy_boot(uint32_t bootimg_type, uint32_t addr)
 		avb_ret = AVB_SLOT_VERIFY_RESULT_ERROR_INVALID_ARGUMENT;
 		goto end;
 	}
-
 	if (avb_ret == AVB_SLOT_VERIFY_RESULT_OK) {
 		ret = boot_post_processing(ab_ops.ops, bootimg_type, slot_data);
 		if (ret)
 			goto end;
 
 		g_boot_state = BOOT_STATE_GREEN;
-
-#ifdef MTK_SECURITY_YELLOW_STATE_SUPPORT
-		if (vb_custom_key_exist())
-			g_boot_state = BOOT_STATE_YELLOW;
-#endif
+		
 		if (boot_authentication(bootimg_type) != 0 &&
 			g_boot_state == BOOT_STATE_GREEN) {
 			ret = record_avb_version(slot_data);

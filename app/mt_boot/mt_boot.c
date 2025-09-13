@@ -99,8 +99,6 @@
 #endif /* LK_RAMDISK_MAX_SIZE */
 
 #define TMPBUF_SIZE        200
-//#define MTK_DEBUG_SHELL
-
 
 #ifdef MBLOCK_LIB_SUPPORT
 #include <mblock.h>
@@ -1543,32 +1541,48 @@ void get_AB_OTA_name(char *part_name, int size)
 
 int boot_linux_from_storage(void)
 {
+	printf("\n\n\n\n\nboot_linux_from_storage\n\n");
 	int ret = 0;
 	uint32_t kernel_target_addr = 0;
 	uint32_t ramdisk_target_addr = 0;
 	uint32_t tags_target_addr = 0;
 	uint32_t ramdisk_addr = 0;
 	uint32_t ramdisk_real_sz = 0;
-#if defined(CFG_NAND_BOOT)
-#define CMDLINE_TMP_CONCAT_SIZE 110
-	char cmdline_tmpbuf[CMDLINE_TMP_CONCAT_SIZE];
-#endif
+
+	int g_boot_mode = NORMAL_BOOT;
+	
+	/*
+	printf("Boot mode: %d\n\n\n\n\n\n",g_boot_mode);
+
+	ret = load_vfy_boot(BOOTIMG_TYPE_BOOT, CFG_BOOTIMG_LOAD_ADDR);
+	printf("[DEBUG] load_vfy_boot returned %d\n", ret);
+	printf("\n\n\n\n\n\nkernel target addr = 0x%x\n", get_kernel_target_addr());
+	printf("ramdisk target addr = 0x%x\n", get_ramdisk_target_addr());
+	printf("tags addr = 0x%x\n", tags_target_addr);
+	printf("ramdisk real size = 0x%x\n", ramdisk_real_sz);
+	*/
+
+	printf("\n\n\n\nGIGGAGGIANGAA\n\n\n\n\n");
+	PROFILING_START("load boot image");
+	ret = load_vfy_boot(BOOTIMG_TYPE_BOOT, CFG_BOOTIMG_LOAD_ADDR);
+	PAL_ASSERT(ret >= 0);
+	PROFILING_END();
+	printf("\n\n\nPERMOFILOWE\n\n\n\n\n");
+
+
+
+
 	switch (g_boot_mode) {
 	case NORMAL_BOOT:
 	case META_BOOT:
 	case ADVMETA_BOOT:
 	case SW_REBOOT:
 	case ALARM_BOOT:
-#ifdef MTK_KERNEL_POWER_OFF_CHARGING
 	case KERNEL_POWER_OFF_CHARGING_BOOT:
 	case LOW_POWER_OFF_CHARGING_BOOT:
-#endif
 		PROFILING_START("load boot image");
-#if defined(CFG_NAND_BOOT)
-		snprintf(cmdline_tmpbuf, CMDLINE_TMP_CONCAT_SIZE, "%s%x%s%x",
-			 NAND_MANF_CMDLINE, nand_flash_man_code, NAND_DEV_CMDLINE, nand_flash_dev_id);
-		cmdline_append(cmdline_tmpbuf);
-#endif
+		printf("GIGGAGGIANGAA");
+
 		ret = load_vfy_boot(BOOTIMG_TYPE_BOOT, CFG_BOOTIMG_LOAD_ADDR);
 		PAL_ASSERT(ret >= 0);
 
@@ -1576,9 +1590,9 @@ int boot_linux_from_storage(void)
 		break;
 
 	case RECOVERY_BOOT:
-		/* it's boot.img when system as root is enabled, and is *
-		 * recovery.img when system as root is disabled. *
-		 */
+		// it's boot.img when system as root is enabled, and is *
+		// recovery.img when system as root is disabled. *
+		 
 		PROFILING_START("load recovery image");
 
 		ret = load_vfy_boot(BOOTIMG_TYPE_RECOVERY, CFG_BOOTIMG_LOAD_ADDR);
@@ -1589,13 +1603,9 @@ int boot_linux_from_storage(void)
 
 	case FACTORY_BOOT:
 	case ATE_FACTORY_BOOT:
-		/* it's boot.img, we don't have standalone factory image now */
+		// it's boot.img, we don't have standalone factory image now 
 		PROFILING_START("load factory image");
-#if defined(CFG_NAND_BOOT)
-		snprintf(cmdline_tmpbuf, CMDLINE_TMP_CONCAT_SIZE, "%s%x%s%x",
-			 NAND_MANF_CMDLINE, nand_flash_man_code, NAND_DEV_CMDLINE, nand_flash_dev_id);
-		cmdline_append(cmdline_tmpbuf);
-#endif
+
 		ret = load_vfy_boot(BOOTIMG_TYPE_BOOT, CFG_BOOTIMG_LOAD_ADDR);
 		PAL_ASSERT(ret >= 0);
 
@@ -1754,6 +1764,7 @@ int get_serial(u64 hwkey, u32 chipid, char ser[SERIALNO_LEN])
 }
 #endif /* CONFIG_MTK_USB_UNIQUE_SERIAL */
 
+
 #ifdef SERIAL_NUM_FROM_BARCODE
 static inline int read_product_info(char *buf)
 {
@@ -1818,8 +1829,7 @@ static inline int read_product_usbid(char *serialno)
 }
 #endif
 
-/******************************************************************************
-******************************************************************************/
+
 static void set_serial_num(void)
 {
 	unsigned int len;
@@ -1881,11 +1891,6 @@ void mt_boot_init(const struct app_descriptor *app)
 
 	set_serial_num();
 
-#ifdef MTK_DEBUG_SHELL
-    if (app != NULL)
-	goto lk_debug;
-#endif
-
 	if (g_boot_mode == FASTBOOT)
 		goto fastboot;
 
@@ -1913,13 +1918,6 @@ fastboot:
 	sz = target_get_max_flash_size();
 	fastboot_init(target_get_scratch_address(), sz);
 	udc_start();
-
-#ifdef MTK_DEBUG_SHELL
-lk_debug:
-	   mtk_wdt_disable();
-	   dprintf(INFO, "mt_boot_init not go to kernel and disable wdt !!\n");
-#endif
-
 }
 
 APP_START(mt_boot)
