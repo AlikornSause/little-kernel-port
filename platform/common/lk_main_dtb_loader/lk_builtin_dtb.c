@@ -80,7 +80,7 @@ static char *get_lk_part_name(void)
 		lk_part_name_inited = 1;
 	}
 #endif
-	return lk_part_name;
+	return "lk_b";
 }
 
 static int load_lk_dtb(char *part_name, char *img_name, void *addr)
@@ -141,6 +141,7 @@ int32_t lk_dtb_init(void)
 	void *lk_overlayed_dtb_ptr = NULL;
 
 	PROFILING_START("lk_dtb_init");
+	printf(get_lk_part_name());
 
 	lk_main_dtb_ptr = lk_overlayed_dtb_addr;
 	/* search lk self-built-in dtb */
