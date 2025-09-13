@@ -1541,7 +1541,6 @@ void get_AB_OTA_name(char *part_name, int size)
 
 int boot_linux_from_storage(void)
 {
-	printf("\n\n\n\n\nboot_linux_from_storage\n\n");
 	int ret = 0;
 	uint32_t kernel_target_addr = 0;
 	uint32_t ramdisk_target_addr = 0;
@@ -1551,26 +1550,6 @@ int boot_linux_from_storage(void)
 
 	int g_boot_mode = NORMAL_BOOT;
 	
-	/*
-	printf("Boot mode: %d\n\n\n\n\n\n",g_boot_mode);
-
-	ret = load_vfy_boot(BOOTIMG_TYPE_BOOT, CFG_BOOTIMG_LOAD_ADDR);
-	printf("[DEBUG] load_vfy_boot returned %d\n", ret);
-	printf("\n\n\n\n\n\nkernel target addr = 0x%x\n", get_kernel_target_addr());
-	printf("ramdisk target addr = 0x%x\n", get_ramdisk_target_addr());
-	printf("tags addr = 0x%x\n", tags_target_addr);
-	printf("ramdisk real size = 0x%x\n", ramdisk_real_sz);
-	*/
-
-	printf("\n\n\n\nGIGGAGGIANGAA\n\n\n\n\n");
-	PROFILING_START("load boot image");
-	ret = load_vfy_boot(BOOTIMG_TYPE_BOOT, CFG_BOOTIMG_LOAD_ADDR);
-	PAL_ASSERT(ret >= 0);
-	PROFILING_END();
-	printf("\n\n\nPERMOFILOWE\n\n\n\n\n");
-
-
-
 
 	switch (g_boot_mode) {
 	case NORMAL_BOOT:
@@ -1581,8 +1560,6 @@ int boot_linux_from_storage(void)
 	case KERNEL_POWER_OFF_CHARGING_BOOT:
 	case LOW_POWER_OFF_CHARGING_BOOT:
 		PROFILING_START("load boot image");
-		printf("GIGGAGGIANGAA");
-
 		ret = load_vfy_boot(BOOTIMG_TYPE_BOOT, CFG_BOOTIMG_LOAD_ADDR);
 		PAL_ASSERT(ret >= 0);
 
