@@ -148,7 +148,7 @@ partname_selected:
 		dtbo_part_name_full[DTBO_PART_NAME_LEN] = '\0';
 		dtbo_part_name_inited = 1;
 	}
-	return dtbo_part_name_full;
+	return "dtbo_a";
 }
 
 #if defined(MTK_DCONFIG_SUPPORT)

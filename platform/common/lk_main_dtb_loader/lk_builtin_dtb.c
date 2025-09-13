@@ -141,7 +141,11 @@ int32_t lk_dtb_init(void)
 	void *lk_overlayed_dtb_ptr = NULL;
 
 	PROFILING_START("lk_dtb_init");
-	printf(get_lk_part_name());
+
+
+	//printf("%s\n\n\n", get_lk_part_name());
+	//printf("%s\n\n\n", get_dtbo_part_name());
+
 
 	lk_main_dtb_ptr = lk_overlayed_dtb_addr;
 	/* search lk self-built-in dtb */
