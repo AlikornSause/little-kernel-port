@@ -222,13 +222,13 @@
 
 // APB Module uart
 /*##########################*/
-// 0x11002000
-#define AP_UART0_BASE (0x11020000)
+// 
+#define AP_UART0_BASE (0x11002000)
 
 // APB Module uart
 /*##########################*/
 // 0x11003000
-#define AP_UART1_BASE (0x11030000)
+#define AP_UART1_BASE (0x11003000)
 
 // APB Module uart
 #define AP_UART2_BASE (0x11004000)
