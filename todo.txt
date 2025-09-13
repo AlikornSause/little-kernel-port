@@ -10,6 +10,8 @@ Shit to do to maybe someday port k61v1_64_bsp to qin f21pro
     - get lcd running someday
 
 Done:
-    - changed the dtb header to one extracted
-      from an original lk dump.
-
+    - changed the dtb header to one extractedfrom an original lk dump.
+    - done some work on the lcm driver usingthe kernel replacement attempt as help.
+    - started using a "register marker" to see where the lk crashed.
+    - realised that for some reason PROFILING_END() crashed.
+    - oh... and dprintf() as well...
