@@ -1690,6 +1690,11 @@ int boot_linux_from_storage(void)
 	/* pass related root of trust info via SMC call */
 	send_root_of_trust_info();
 
+	//cmdline_append("slub_debug=OFZPU");
+	cmdline_append("console=ttyS0,921600n1");
+	cmdline_append("androidboot.meta_log_disable=0");
+	cmdline_append("mtk_printk_ctrl.disable_uart=0");
+
 	boot_linux((void *)kernel_target_addr,
 			(unsigned *)tags_target_addr,
 		   	board_machtype(),
