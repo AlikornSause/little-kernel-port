@@ -1690,10 +1690,8 @@ int boot_linux_from_storage(void)
 	/* pass related root of trust info via SMC call */
 	send_root_of_trust_info();
 
-	//cmdline_append("slub_debug=OFZPU");
-	cmdline_append("console=ttyS0,921600n1");
-	cmdline_append("androidboot.meta_log_disable=0");
-	cmdline_append("mtk_printk_ctrl.disable_uart=0");
+	cmdline_overwrite("console=tty0 console=ttyS0,921600n1 vmalloc=400M slub_debug=OFZPU page_owner=on swiotlb=noforce cgroup.memory=nosocket,nokmem androidboot.hardware=mt6761 maxcpus=8 loop.max_part=7 firmware_class.path=/vendor/firmware has_battery_removed=1 androidboot.boot_devices=bootdevice,soc/11230000.mmc,11230000.mmc ramoops.mem_address=0x47c90000 ramoops.mem_size=0xe0000 ramoops.pmsg_size=0x10000 ramoops.console_size=0x40000 bootopt=64S3,32N2,64N2 buildvariant=user root=/dev/ram  androidboot.slot_suffix=_b androidboot.slot=b androidboot.verifiedbootstate=orange androidboot.force_normal_boot=1 androidboot.meta_log_disable=0 lcd=<null> mtk_printk_ctrl.disable_uart=0 androidboot.serialno=xxxxxxxxxxxxxxx androidboot.bootreason=usb gpt=1 usb2jtag_mode=0 androidboot.dtb_idx=0 androidboot.dtbo_idx=0");
+	//cmdline_append("androidboot.boot_devices=bootdevice,soc/11230000.mmc,11230000.mmc ramoops.mem_address=0x47c90000 ramoops.mem_size=0xe0000 ramoops.pmsg_size=0x10000ramoops.console_size=0x40000");
 
 	boot_linux((void *)kernel_target_addr,
 			(unsigned *)tags_target_addr,
