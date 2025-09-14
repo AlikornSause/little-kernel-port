@@ -1,4 +1,4 @@
-<h1>Qin f21 Pro little kernel bootloader port<h1>
+<h1>Qin f21 Pro little kernel bootloader port</h1>
 
 - changed the dtb header to one extractedfrom an original lk dump.\
 - done some work on the lcm driver usingthe kernel replacement attempt as help.\
