@@ -17,9 +17,10 @@
 DONE:
 - fix fastboot
 - fix usb connections
+- fix serial number not loading in
 
 
 TODO:
 - fix lcd: logo not showing
-- fix serial number not loading in
 - remove unnecessary code
+- fix fastboot reboot 
