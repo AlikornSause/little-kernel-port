@@ -149,6 +149,11 @@ partname_selected:
 		dtbo_part_name_inited = 1;
 	}
 	return "dtbo_a";
+	/*
+	Mind that this is just a temporary solution
+	Originally, it was this:
+	return dtbo_part_name_full;
+	*/
 }
 
 #if defined(MTK_DCONFIG_SUPPORT)

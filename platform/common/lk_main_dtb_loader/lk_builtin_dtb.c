@@ -81,6 +81,11 @@ static char *get_lk_part_name(void)
 	}
 #endif
 	return "lk_b";
+	/*
+	Mind that this is just a temporary solution
+	Originally, it was this:
+	return lk_part_name;
+	*/
 }
 
 static int load_lk_dtb(char *part_name, char *img_name, void *addr)
