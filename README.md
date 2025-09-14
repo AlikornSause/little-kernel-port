@@ -14,8 +14,12 @@
 
 
 
-TODO:
-- fix lcd: logo not showing
+DONE:
 - fix fastboot
 - fix usb connections
+
+
+TODO:
+- fix lcd: logo not showing
+- fix serial number not loading in
 - remove unnecessary code

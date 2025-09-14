@@ -262,9 +262,7 @@
 #define USB_BASE (0x11200000)
 
 // APB Module usb_sif
-/*##########################*/
-// 0x11CC0000
-#define USBSIF_BASE (0x11210000)
+#define USBSIF_BASE (0x11CC0000)
 
 // APB Module audio
 #define AUDIO_BASE (0x11220000)
