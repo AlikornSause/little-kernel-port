@@ -1,3 +1,3 @@
 #!/bin/bash
-make clean PROJECT=k61v1_64_bsp
-make k61v1_64_bsp -j$(nproc) PROJECT=k61v1_64_bsp
+make clean PROJECT=qinf21pro
+make qinf21pro -j$(nproc) PROJECT=qinf21pro

@@ -1,6 +1,6 @@
 #!/bin/bash
-make clean PROJECT=k61v1_64_bsp
-make k61v1_64_bsp -j$(nproc) PROJECT=k61v1_64_bsp
+make clean PROJECT=qinf21pro
+make qinf21pro -j$(nproc) PROJECT=qinf21pro
 
-mtk w lk_a build-k61v1_64_bsp/lk.img
-mtk w lk_b build-k61v1_64_bsp/lk.img
+mtk w lk_a build-qinf21pro/lk.img
+mtk w lk_b build-qinf21pro/lk.img

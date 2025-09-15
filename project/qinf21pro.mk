@@ -1,6 +1,6 @@
 #
 LOCAL_DIR := $(GET_LOCAL_DIR)
-TARGET := k61v1_64_bsp
+TARGET := qinf21pro
 MODULES += app/mt_boot \
            dev/lcm
 MTK_EMMC_SUPPORT = yes

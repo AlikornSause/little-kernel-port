@@ -1,9 +1,12 @@
 <h1>Qin f21 Pro little kernel bootloader port</h1>
 
-<h4>To build, install the needed stuff in dependencies.txt
-and use the run.sh or runclean.sh scripts</h4>
+<h3>To build, install the needed stuff in dependencies.txt
+and use the run.sh or runclean.sh scripts</h3>
+<br>
+<br>
+<br>
 
-
+<h3>Timeline I guess:</h3>
 - changed the dtb header to one extractedfrom an original lk dump.
 - done some work on the lcm driver usingthe kernel replacement attempt as help.
 - started using a "register marker" to see where the lk crashed.
@@ -16,15 +19,13 @@ and use the run.sh or runclean.sh scripts</h4>
 
 - Fixed that! Now it properly boots linux kernel and android!
 
-
+<h3>TODO and DONE:</h3>
+TODO:
+- fix lcd: logo not showing
+- remove unnecessary code
+- fix fastboot reboot 
 
 DONE:
 - fix fastboot
 - fix usb connections
 - fix serial number not loading in
-
-
-TODO:
-- fix lcd: logo not showing
-- remove unnecessary code
-- fix fastboot reboot 
