@@ -30,3 +30,40 @@ DONE:
 - fix fastboot
 - fix usb connections
 - fix serial number not loading in
+
+
+<h3>LK booting process:</h3>
+
+1. **arch/arm/crt0.S** in assembly, first thing thats executed
+2. **kernel/main.c/kmain** main kernel function in C. It calls various init functions:
+    - thread_init_early()
+    - arch_early_init()
+    - platform_early_init()
+    - target_early_init()
+    - call_constructors()
+    - heap_init()
+    - thread_init()
+    - dpc_init()
+    - timer_init()
+    - bootstrap2()
+3. **kernel/main.c/bootstrap2** function that takes on the init
+    - print_stack_of_current_thread()
+    - arch_init()
+    - mboot_allocate_lk_scratch_from_mblock()
+    - platform_init()
+    - target_init()
+    - apps_init()
+4. **app/app.c/apps_init** function that calls different "apps". In our case its mt_boot
+5. **app/mt_boot/mt_boot.c/mt_boot_init** the init function for that "app"
+    - set_serial_num()
+    Depending on the mode, it will go to either of these paths:
+    1. LINUX
+    - boot_linux_from_storage() 
+    - boot_linux()
+    
+    2. FASTBOOT
+    - target_fastboot_init()
+    - mt_part_dump()
+    - fastboot_init()
+    - udc_start()
+    

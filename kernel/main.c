@@ -84,15 +84,6 @@ void kmain(void)
 {
 #if !defined(MACH_FPGA) && !defined(SB_LK_BRINGUP)
 	boot_time = get_timer(0);
-
-
-/*******************************
-Try printing the h letter to uart
-********************************/
-	*(volatile unsigned char *)(0x11020000) = 0x48; // = "H"
-/*******************************
-********************************/
-
 #endif
 
 	// get us into some sort of thread context
@@ -139,7 +130,6 @@ Try printing the h letter to uart
 #endif
 
 
-#if (!ENABLE_NANDWRITE)
 	// create a thread to complete system initialization
 	dprintf(SPEW, "creating bootstrap completion thread\n");
 
@@ -166,7 +156,8 @@ Try printing the h letter to uart
 
 	// become the idle thread
 	thread_become_idle();
-#else
+	
+#if (ENABLE_NANDWRITE)
         bootstrap_nandwrite();
 #endif
 }
