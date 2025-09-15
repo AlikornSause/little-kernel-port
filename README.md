@@ -20,6 +20,7 @@ and use the run.sh or runclean.sh scripts</h3>
 - Fixed that! Now it properly boots linux kernel and android!
 
 <h3>TODO and DONE:</h3>
+
 TODO:
 - fix lcd: logo not showing
 - remove unnecessary code
