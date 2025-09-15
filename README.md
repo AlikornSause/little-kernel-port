@@ -56,11 +56,12 @@ DONE:
 4. **app/app.c/apps_init** function that calls different "apps". In our case its mt_boot
 5. **app/mt_boot/mt_boot.c/mt_boot_init** the init function for that "app"
     - set_serial_num()
+    
     Depending on the mode, it will go to either of these paths:
     1. LINUX
     - boot_linux_from_storage() 
     - boot_linux()
-    
+
     2. FASTBOOT
     - target_fastboot_init()
     - mt_part_dump()
