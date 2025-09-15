@@ -23,8 +23,13 @@ and use the run.sh or runclean.sh scripts</h3>
 
 TODO:
 - fix lcd: logo not showing
-- remove unnecessary code
 - fix fastboot reboot 
+- remove unnecessary code:
+    - unnecessary apps (nandwrite, clocktests, pcitests, stringters etc)
+    - unneeded libs etc
+    - all of AVB functionality
+- just clean up messy code (its bad)
+
 
 DONE:
 - fix fastboot
@@ -56,7 +61,7 @@ DONE:
 4. **app/app.c/apps_init** function that calls different "apps". In our case its mt_boot
 5. **app/mt_boot/mt_boot.c/mt_boot_init** the init function for that "app"
     - set_serial_num()
-    
+
     Depending on the mode, it will go to either of these paths:
     1. LINUX
     - boot_linux_from_storage() 

@@ -37,10 +37,6 @@
 #include <iothread.h>
 #include <version.h>
 
-#ifdef MTK_LK_IRRX_SUPPORT
-#include <platform/mtk_ir_lk_core.h>
-#endif
-
 extern void (*__ctor_list[])(void);
 extern void (*__ctor_end[])(void);
 extern int __bss_start;
@@ -125,31 +121,22 @@ void kmain(void)
 	dprintf(SPEW, "initializing timers\n");
 	timer_init();
 
-#ifdef  MTK_LK_IRRX_SUPPORT
-   mtk_ir_init(0);
-#endif
-
-
 	// create a thread to complete system initialization
 	dprintf(SPEW, "creating bootstrap completion thread\n");
 
-	thread_t *thread_bs2 = thread_create("bootstrap2", &bootstrap2, NULL,
-		DEFAULT_PRIORITY, DEFAULT_STACK_SIZE);
-	if (thread_bs2)
-		thread_resume(thread_bs2);
-	else {
-		dprintf(CRITICAL, "Error: Cannot create bootstrap2 thread!\n");
-		assert(0);
-	}
+	//
+	// Bootstrap2 thread
+	//
+	thread_t *thread_bs2 = thread_create("bootstrap2", &bootstrap2, NULL, DEFAULT_PRIORITY, DEFAULT_STACK_SIZE);
+	if (thread_bs2) thread_resume(thread_bs2); 
+	else {dprintf(CRITICAL, "Error: Cannot create bootstrap2 thread!\n"); assert(0);}
 
-	thread_t *thread_io = thread_create("iothread", &iothread, NULL,
-		IO_THREAD_PRIORITY, DEFAULT_STACK_SIZE);
-	if (thread_io)
-		thread_resume(thread_io);
-	else {
-		dprintf(CRITICAL, "Error: Cannot create I/O thread!\n");
-		assert(0);
-	}
+	//
+	// Iothread thread
+	//
+	thread_t *thread_io = thread_create("iothread", &iothread, NULL, IO_THREAD_PRIORITY, DEFAULT_STACK_SIZE);
+	if (thread_io) thread_resume(thread_io);
+	else {dprintf(CRITICAL, "Error: Cannot create I/O thread!\n"); assert(0);}
 
 	// enable interrupts
 	exit_critical_section();
@@ -172,12 +159,13 @@ static int bootstrap2(void *arg)
 	arch_init();
 
 	// XXX put this somewhere else
-#if WITH_LIB_BIO
-	bio_init();
-#endif
-#if WITH_LIB_FS
-	fs_init();
-#endif
+	// #if WITH_LIB_BIO
+	// bio_init();
+	// #endif
+	// #if WITH_LIB_FS
+	// fs_init();
+	// #endif
+
 	// Allocate LK memory from mb, free before jump to kernel
 	mboot_allocate_lk_scratch_from_mblock();
 
